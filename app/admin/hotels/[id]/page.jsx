@@ -180,9 +180,7 @@ export default function HotelDetailsPage({ params }) {
               <>
                 <h1 className="text-2xl font-bold mb-2">{hotel.name}</h1>
                 <p className="text-gray-600 mb-4">{hotel.description}</p>
-                <p className="text-lg font-semibold text-green-700 mb-2">
-                  ₹{hotel.price_per_night} / night
-                </p>
+
                 <p className="text-gray-500">
                   {hotel.address}, {hotel.city}, {hotel.state}, {hotel.country}
                 </p>
@@ -199,17 +197,6 @@ export default function HotelDetailsPage({ params }) {
                   value={hotel.description}
                   onChange={(e) =>
                     setHotel({ ...hotel, description: e.target.value })
-                  }
-                  className="w-full border rounded px-3 py-2"
-                />
-                <input
-                  type="number"
-                  value={hotel.price_per_night}
-                  onChange={(e) =>
-                    setHotel({
-                      ...hotel,
-                      price_per_night: Number(e.target.value),
-                    })
                   }
                   className="w-full border rounded px-3 py-2"
                 />

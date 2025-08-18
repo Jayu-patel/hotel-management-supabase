@@ -51,6 +51,7 @@ export default function hotels(){
             supabase.removeChannel(channel)
         }
     },[])
+    
     if(loading) return <div className='w-[100%] h-[calc(100vh-100px)] grid place-items-center'> <Loader/> </div>
     if(!loading && hotels.length == 0) return <div className='w-screen'>
         <p className="text-gray-500 text-center mt-10">No hotels found.</p>

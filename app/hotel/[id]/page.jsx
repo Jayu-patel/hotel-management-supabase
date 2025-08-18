@@ -51,7 +51,7 @@ export default function page({params}){
 
         const { data: room, error: roomError } = await supabase
             .from("rooms")
-            .select("is_available")
+            .select("is_available, price_per_night")
             .eq("id", roomNumber)
             .single()
         
@@ -63,7 +63,7 @@ export default function page({params}){
             return toast.error("This room is currently unavailable")
         }
 
-        const room_price = hotel?.price_per_night
+        const room_price = room?.price_per_night
         const days = ((dateRange[0].endDate - dateRange[0].startDate)/86400000) + 1
         const total = days * room_price
 
@@ -83,10 +83,7 @@ export default function page({params}){
             setBookingLoading(false)
             return toast.error(error.message)
         }
-        else{
-            toast.success("Booked successfully!")
-        }
-
+        
         const { error: updateError } = await supabase
             .from("rooms")
             .update({ is_available: false })
@@ -103,6 +100,9 @@ export default function page({params}){
                 key: "selection"
             }
         ])
+
+        router.push("/")
+        toast.success("Booked successfully!")
 
         getRooms()
         setBookingLoading(false)
