@@ -109,11 +109,6 @@ export default function Login() {
                     ? <p>Already have an account? <span onClick={()=>setState('Login')} className='text-[#5f6fff] underline cursor-pointer'>Login</span></p>
                     : <p>Create an new account? <span onClick={()=>setState('Sign Up')} className='text-[#5f6fff] underline cursor-pointer'>click here</span></p>
                 }
-                {
-                    state === "Sign Up"
-                    ? <></>
-                    : <p>Forgot Password? <span onClick={()=>{router.push("/")}} className='text-[#5f6fff] underline cursor-pointer'>click here</span> </p>
-                }
             </div>
         </div>
     )
