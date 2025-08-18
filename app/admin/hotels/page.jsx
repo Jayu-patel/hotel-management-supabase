@@ -110,7 +110,7 @@ export default function Hotels() {
         btnMessage={"Delete"}
       />
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-3xl font-bold">Hotels</h1>
+        <h1 className="text-3xl font-semibold">Hotels</h1>
         <button
           onClick={() => router.push("/admin/add_hotel")}
           className="bg-[#5f6fff] hover:bg-blue-700 text-white px-5 py-2 rounded-lg shadow cursor-pointer"

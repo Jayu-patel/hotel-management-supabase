@@ -83,34 +83,6 @@ export default function Bookings(){
     if(!loading && bookings.length == 0) return <div className="p-5"><h1 className="font-semibold text-2xl">You don't have any bookings yet.</h1></div>
     return (
       bookings && (
-        // <div className="m-5">
-        //     <h1 className="text-2xl font-medium">My Bookings</h1>
-
-        //     <div className="w-full md:w-[50%] h-[100vh] mt-4 flex flex-col gap-5">
-        //         {
-        //             bookings?.map((e)=>{
-        //                 return(
-        //                     <div key={e._id} className="w-[90%] flex flex-col gap-1 mx-auto shadow-xl border border-gray-200 p-4">
-        //                         <span className="flex gap-1 text-xl font-medium">
-        //                             <p>{e.room_id.hotel_id.name},</p>
-        //                             <p>Room: {e.room_id.room_number}</p>
-        //                             <p>- {e.room_id.room_type}</p>
-        //                         </span>
-        //                         <p>Booking Id : {e.id}</p>
-        //                         <p>Check In : {e.check_in}</p>
-        //                         <p>Check Out : {e.check_out}</p>
-        //                         <p>Amount : {e.total_amount}</p>
-        //                         <div className="mt-1">
-        //                             <p className={`border py-1 px-2 rounded-lg text-center ${ e.status === "pending" ? "bg-yellow-100 text-yellow-700 border-yellow-300" : e.status === "cancelled" ? "bg-red-100 text-red-700 border-red-300" : e.status === "confirmed" ? "bg-green-100 text-green-700 border-green-300" : "" }`}>
-        //                                 {capitalizeFirstLetter(e.status)}
-        //                             </p>
-        //                         </div>
-        //                     </div>
-        //                 )
-        //             })
-        //         }
-        //     </div>
-        // </div>
         <div className="m-5">
           <h1 className="text-2xl font-medium">My Bookings</h1>
 

@@ -111,7 +111,7 @@ export default function Booking() {
 
   return (
     <div className="m-5">
-      <h1 className="text-2xl font-semibold mb-5">Bookings</h1>
+      <h1 className="text-3xl font-semibold mb-5">Bookings</h1>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {booking?.map((e) => (
