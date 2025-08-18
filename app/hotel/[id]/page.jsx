@@ -18,7 +18,7 @@ export default function page({params}){
     const [hotel, setHotel] = useState(null)
     const [rooms, setRooms] = useState([])
     const [loading, setLoading] = useState(false)
-
+    const [numPeople, setNumPeople] = useState(1)
 
     // const [guests, setGuests] = useState(1);
     const [bookingLoading, setBookingLoading] = useState(false)
@@ -75,7 +75,8 @@ export default function page({params}){
                 room_id: roomNumber,
                 check_in: toUTC(dateRange[0].startDate),
                 check_out: toUTC(dateRange[0].endDate),
-                total_amount: total
+                total_amount: total,
+                number_of_guests: numPeople
             })
             .single()
         
@@ -148,81 +149,189 @@ export default function page({params}){
         }
     },[])
     if(loading) return <div className='w-[100%] h-[calc(100vh-100px)] grid place-items-center'> <Loader/> </div>
-    return hotel && (
-        <div className="w-[80%] mx-auto">
-            <div className="w-full my-5">
-                <h1 className="font-semibold text-3xl">{hotel.name}, {hotel.city}</h1>
-                <p className="flex gap-2 items-center text-sm text-gray-600 ml-1">
-                    <MapPin size={20} />
-                    <span>{hotel.address}</span>
-                </p>
+    return (
+      hotel && (
+        // <div className="w-[80%] mx-auto">
+        //     <div className="w-full my-5">
+        //         <h1 className="font-semibold text-3xl">{hotel.name}, {hotel.city}</h1>
+        //         <p className="flex gap-2 items-center text-sm text-gray-600 ml-1">
+        //             <MapPin size={20} />
+        //             <span>{hotel.address}</span>
+        //         </p>
 
-                <div className="w-full md:w-[50%] my-3 relative" style={{ aspectRatio: '4/3' }}>
-                    {/* <img className="rounded-2xl" src={hotel.image} alt="" /> */}
-                    <Image
-                        src={hotel.image}
-                        alt={hotel.name}
-                        fill
-                        className='object-cover rounded-2xl'
-                    />
+        //         <div className="w-full md:w-[50%] my-3 relative" style={{ aspectRatio: '4/3' }}>
+        //             {/* <img className="rounded-2xl" src={hotel.image} alt="" /> */}
+        //             <Image
+        //                 src={hotel.image}
+        //                 alt={hotel.name}
+        //                 fill
+        //                 className='object-cover rounded-2xl'
+        //             />
+        //         </div>
+
+        //         <h2 className="font-semibold text-lg">About this property</h2>
+        //         <p className="w-full md:w-[60%] text-sm">{hotel.description}</p>
+
+        //         {
+        //             rooms.length != 0 ?
+        //             <div className="py-6 max-w-lg space-y-4">
+        //                 <h1 className="text-xl font-bold">Book a Room</h1>
+
+        //                 <p className="mb-0">Select yor room:</p>
+        //                 <select
+        //                     value={roomNumber}
+        //                     onChange={(e) => setRoomNumber(e.target.value)}
+        //                     className="border p-2 w-full"
+        //                 >
+        //                     <option value="" disabled>Select room</option>
+        //                     {
+        //                         rooms?.map(room => {
+        //                             const available = room.is_available
+
+        //                             return (
+        //                                 <option
+        //                                     key={room.id}
+        //                                     value={room.id}
+        //                                     disabled={!available}
+        //                                 >
+        //                                     Room: {room.room_number} {!available && " (Unavailable)"}
+        //                                 </option>
+        //                             )
+        //                         })
+        //                     }
+        //                 </select>
+
+        //                 <DateRange
+        //                     editableDateInputs={true}
+        //                     onChange={(item) => setDateRange([item.selection])}
+        //                     moveRangeOnFirstSelection={false}
+        //                     ranges={dateRange}
+        //                     minDate={new Date()}
+        //                 />
+
+        //                 <button
+        //                     onClick={handleBooking}
+        //                     className={`${bookingLoading ? "bg-[#2b40ff]" : "bg-[#5f6fff]"} text-white px-4 py-2 rounded w-full cursor-pointer hover:bg-[#2b40ff]`}
+        //                     >
+        //                         {
+        //                             bookingLoading ? "Booking..." : "Book Now"
+        //                         }
+        //                 </button>
+        //             </div>
+        //             :
+        //             <div>
+        //                 <h1 className="text-xl font-bold mt-3">No Room Available</h1>
+        //             </div>
+        //         }
+        //     </div>
+        // </div>
+        <div className="w-[80%] mx-auto">
+          <div className="w-full my-5">
+            <h1 className="font-semibold text-3xl">
+              {hotel.name}, {hotel.city}
+            </h1>
+            <p className="flex gap-2 items-center text-sm text-gray-600 ml-1">
+              <MapPin size={20} />
+              <span>{hotel.address}</span>
+            </p>
+
+            <div
+              className="w-full md:w-[50%] my-3 relative"
+              style={{ aspectRatio: "4/3" }}
+            >
+              {/* <img className="rounded-2xl" src={hotel.image} alt="" /> */}
+              <Image
+                src={hotel.image}
+                alt={hotel.name}
+                fill
+                className="object-cover rounded-2xl"
+              />
+            </div>
+
+            <h2 className="font-semibold text-lg">About this property</h2>
+            <p className="w-full md:w-[60%] text-sm">{hotel.description}</p>
+
+            {rooms.length != 0 ? (
+              <div className="py-6 max-w-lg space-y-4">
+                <h1 className="text-xl font-bold">Book a Room</h1>
+
+                <p className="mb-0">Select your room:</p>
+                <select
+                  value={roomNumber}
+                  onChange={(e) => {setRoomNumber(e.target.value); setNumPeople(1)}}
+                  className="border p-2 w-full"
+                >
+                  <option value="" disabled>
+                    Select room
+                  </option>
+                  {rooms?.map((room) => {
+                    const available = room.is_available;
+
+                    return (
+                      <option
+                        key={room.id}
+                        value={room.id}
+                        disabled={!available}
+                      >
+                        Room: {room.room_number}{" "}
+                        {!available && " (Unavailable)"}, Max Capacity:{" "}
+                        {room.capacity}
+                      </option>
+                    );
+                  })}
+                </select>
+
+                {/* Select number of people */}
+                <div>
+                  <p className="mb-0">Select no. of people:</p>
+                  <select
+                    value={numPeople}
+                    onChange={(e) => setNumPeople(e.target.value)}
+                    className="border p-2 w-full"
+                    disabled={!roomNumber}
+                  >
+                    <option value="" disabled>
+                      Select number of people
+                    </option>
+                    {rooms.find((r) => r.id == roomNumber)?.capacity &&
+                      Array.from(
+                        {
+                          length: rooms.find((r) => r.id == roomNumber)
+                            .capacity,
+                        },
+                        (_, i) => (
+                          <option key={i + 1} value={i + 1}>
+                            {i + 1}
+                          </option>
+                        )
+                      )}
+                  </select>
                 </div>
 
-                <h2 className="font-semibold text-lg">About this property</h2>
-                <p className="w-full md:w-[60%] text-sm">{hotel.description}</p>
+                <DateRange
+                  editableDateInputs={true}
+                  onChange={(item) => setDateRange([item.selection])}
+                  moveRangeOnFirstSelection={false}
+                  ranges={dateRange}
+                  minDate={new Date()}
+                />
 
-                {
-                    rooms.length != 0 ?
-                    <div className="py-6 max-w-lg space-y-4">
-                        <h1 className="text-xl font-bold">Book a Room</h1>
-                    
-                        <select
-                            value={roomNumber}
-                            onChange={(e) => setRoomNumber(e.target.value)}
-                            className="border p-2 w-full"
-                        >
-                            <option value="" disabled>Select room</option>
-                            {
-                                rooms?.map(room => {
-                                    const available = room.is_available
-
-                                    return (
-                                        <option
-                                            key={room.id}
-                                            value={room.id}
-                                            disabled={!available}
-                                        >
-                                            Room: {room.room_number} {!available && " (Unavailable)"}
-                                        </option>
-                                    )
-                                })
-                            }
-                        </select>
-                    
-                        {/* Date Picker */}
-                        <DateRange
-                            editableDateInputs={true}
-                            onChange={(item) => setDateRange([item.selection])}
-                            moveRangeOnFirstSelection={false}
-                            ranges={dateRange}
-                            minDate={new Date()}
-                        />
-                    
-                        {/* Book Button */}
-                        <button
-                            onClick={handleBooking}
-                            className={`${bookingLoading ? "bg-[#2b40ff]" : "bg-[#5f6fff]"} text-white px-4 py-2 rounded w-full cursor-pointer hover:bg-[#2b40ff]`}
-                            >
-                                {
-                                    bookingLoading ? "Booking..." : "Book Now"
-                                }
-                        </button>
-                    </div>
-                    : 
-                    <div>
-                        <h1 className="text-xl font-bold mt-3">No Room Available</h1>
-                    </div>
-                }
-            </div>
+                <button
+                  onClick={handleBooking}
+                  className={`${
+                    bookingLoading ? "bg-[#2b40ff]" : "bg-[#5f6fff]"
+                  } text-white px-4 py-2 rounded w-full cursor-pointer hover:bg-[#2b40ff]`}
+                >
+                  {bookingLoading ? "Booking..." : "Book Now"}
+                </button>
+              </div>
+            ) : (
+              <div>
+                <h1 className="text-xl font-bold mt-3">No Room Available</h1>
+              </div>
+            )}
+          </div>
         </div>
-    )
+      )
+    );
 }
