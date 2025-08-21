@@ -151,81 +151,7 @@ export default function page({params}){
     if(loading) return <div className='w-[100%] h-[calc(100vh-100px)] grid place-items-center'> <Loader/> </div>
     return (
       hotel && (
-        // <div className="w-[80%] mx-auto">
-        //     <div className="w-full my-5">
-        //         <h1 className="font-semibold text-3xl">{hotel.name}, {hotel.city}</h1>
-        //         <p className="flex gap-2 items-center text-sm text-gray-600 ml-1">
-        //             <MapPin size={20} />
-        //             <span>{hotel.address}</span>
-        //         </p>
-
-        //         <div className="w-full md:w-[50%] my-3 relative" style={{ aspectRatio: '4/3' }}>
-        //             {/* <img className="rounded-2xl" src={hotel.image} alt="" /> */}
-        //             <Image
-        //                 src={hotel.image}
-        //                 alt={hotel.name}
-        //                 fill
-        //                 className='object-cover rounded-2xl'
-        //             />
-        //         </div>
-
-        //         <h2 className="font-semibold text-lg">About this property</h2>
-        //         <p className="w-full md:w-[60%] text-sm">{hotel.description}</p>
-
-        //         {
-        //             rooms.length != 0 ?
-        //             <div className="py-6 max-w-lg space-y-4">
-        //                 <h1 className="text-xl font-bold">Book a Room</h1>
-
-        //                 <p className="mb-0">Select yor room:</p>
-        //                 <select
-        //                     value={roomNumber}
-        //                     onChange={(e) => setRoomNumber(e.target.value)}
-        //                     className="border p-2 w-full"
-        //                 >
-        //                     <option value="" disabled>Select room</option>
-        //                     {
-        //                         rooms?.map(room => {
-        //                             const available = room.is_available
-
-        //                             return (
-        //                                 <option
-        //                                     key={room.id}
-        //                                     value={room.id}
-        //                                     disabled={!available}
-        //                                 >
-        //                                     Room: {room.room_number} {!available && " (Unavailable)"}
-        //                                 </option>
-        //                             )
-        //                         })
-        //                     }
-        //                 </select>
-
-        //                 <DateRange
-        //                     editableDateInputs={true}
-        //                     onChange={(item) => setDateRange([item.selection])}
-        //                     moveRangeOnFirstSelection={false}
-        //                     ranges={dateRange}
-        //                     minDate={new Date()}
-        //                 />
-
-        //                 <button
-        //                     onClick={handleBooking}
-        //                     className={`${bookingLoading ? "bg-[#2b40ff]" : "bg-[#5f6fff]"} text-white px-4 py-2 rounded w-full cursor-pointer hover:bg-[#2b40ff]`}
-        //                     >
-        //                         {
-        //                             bookingLoading ? "Booking..." : "Book Now"
-        //                         }
-        //                 </button>
-        //             </div>
-        //             :
-        //             <div>
-        //                 <h1 className="text-xl font-bold mt-3">No Room Available</h1>
-        //             </div>
-        //         }
-        //     </div>
-        // </div>
-        <div className="w-[80%] mx-auto">
+        <div className="w-[85%] mx-auto">
           <div className="w-full my-5">
             <h1 className="font-semibold text-3xl">
               {hotel.name}, {hotel.city}
@@ -235,18 +161,30 @@ export default function page({params}){
               <span>{hotel.address}</span>
             </p>
 
-            <div
-              className="w-full md:w-[50%] my-3 relative"
-              style={{ aspectRatio: "4/3" }}
-            >
-              {/* <img className="rounded-2xl" src={hotel.image} alt="" /> */}
-              <Image
+              <div className="flex gap-3 relative my-2">
+
+            <div className="flex-1 w-full">
+              <img
                 src={hotel.image}
-                alt={hotel.name}
-                fill
-                className="object-cover rounded-2xl"
+                className="w-full h-full object-cover"
+                alt="hotel image"
               />
             </div>
+            <div className="flex-1 md:grid grid-cols-2 gap-3 relative hidden">
+              {hotel?.images?.map((e, i) => {
+                if (i == 0) return <div key={i} className="hidden"></div>;
+                return (
+                  <img
+                    key={i}
+                    className="w-full h-full object-cover"
+                    src={e}
+                    alt="hotel image"
+                  />
+                );
+              })}
+            </div>
+
+          </div>
 
             <h2 className="font-semibold text-lg">About this property</h2>
             <p className="w-full md:w-[60%] text-sm">{hotel.description}</p>
