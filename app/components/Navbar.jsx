@@ -26,7 +26,7 @@ export default function Navbar() {
   ]
 
   return (
-    <div className='flex items-center justify-between text-sm py-4 border-b border-b-gray-400 text-white bg-[#5f6fff]'>
+    <div className='flex items-center justify-between text-sm py-4 border-b border-b-gray-400 text-white bg-black'>
       <div className='absolute'>
         <ConfirmationPopup
           showPopup={showPopup}
